@@ -14,7 +14,6 @@ userRouter.post('/users', [
 
 userRouter.get('/users', authMiddleware, UserController.getUsers)
 userRouter.put('/users/:id', authMiddleware, [
-    // Add validation as necessary, for example:
     body('email').optional().isEmail().normalizeEmail().withMessage('Valid email is required'),
     body('password').optional().isLength({ min: 5 }).withMessage('Password must be at least 5 characters long'),
 ], UserController.updateUser)
