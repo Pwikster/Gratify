@@ -17,3 +17,11 @@
 - Option to receive gratitude notes via SMS
 - Set frequency for sending gratitude notes
 - Account deletion option
+
+
+## Running Gratify
+You will need a .env file in /server with the following variables configured
+- PORT
+- MONGODB_URI
+- BCRYPT_SALT_ROUNDS
+- JWT_SECRET

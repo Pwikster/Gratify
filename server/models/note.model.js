@@ -9,4 +9,4 @@ const NoteSchema = new Schema(
 )
 
 const Note = model("Note", NoteSchema)
-export default NoteUser
+export default Note
