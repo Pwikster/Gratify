@@ -6,7 +6,7 @@
 - User registration and profile setup [50% (User registration implemented)]
 
 ## Gratitude Notes
-- Add, view, edit, and delete gratitude notes  [50% (Add and view gratitude notes implemented)]
+- Add, view, edit, and delete gratitude notes  [75% (Add, view and edit gratitude notes implemented)]
 - Send gratitude notes to other users [DONE]
 
 ## Dashboard
@@ -25,3 +25,6 @@ You will need a .env file in /server with the following variables configured
 - MONGODB_URI
 - BCRYPT_SALT_ROUNDS
 - JWT_SECRET
+
+## Known Bugs
+- When editing a note, the date adjustment will be one day prior to selected date.
