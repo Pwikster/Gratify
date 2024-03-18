@@ -9,5 +9,6 @@ noteRouter.post('/notes', authMiddleware, NoteController.createNote)
 noteRouter.get('/notes', authMiddleware, NoteController.getNotes)
 noteRouter.put('/notes/:id', authMiddleware, NoteController.updateNote)
 noteRouter.delete('/notes/:id', authMiddleware, NoteController.deleteNote)
+noteRouter.post('/notes/send', authMiddleware, NoteController.sendNote)
 
 export default noteRouter

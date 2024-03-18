@@ -82,7 +82,7 @@ const UserController = {
                 expiresIn: '8h',
             });
 
-            res.json({ token })
+            res.json({ token, userId: user._id })
         } catch (error) {
             console.error(error)
             res.status(500).json({ message: "Server error" })

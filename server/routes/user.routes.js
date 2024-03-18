@@ -20,6 +20,8 @@ userRouter.put('/users/:id', authMiddleware, [
 
 userRouter.delete('/users/:id', authMiddleware, UserController.deleteUser)
 
-userRouter.post('/login', UserController.login)
+userRouter.post('/login', [
+    body('email').isEmail().normalizeEmail().withMessage('Valid email is required'),
+    body('password').isLength({ min: 8 }).withMessage('Password must be at least 8 characters long')], UserController.login)
 
 export default userRouter
