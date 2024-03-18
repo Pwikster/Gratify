@@ -27,6 +27,23 @@ const NoteController = {
         }
     },
 
+    // Get a note by its id
+    getNoteById: async (req, res) => {
+        const { id } = req.params;
+        const userId = req.user.id;
+
+        try {
+            const note = await Note.findOne({ _id: id, userId });
+            if (!note) {
+                return res.status(404).json({ message: "Note not found or unauthorized" });
+            }
+
+            res.json(note);
+        } catch (error) {
+            res.status(500).json({ message: `Error fetching note: ${error.message}` });
+        }
+    },
+
     // Update a note by ID, ensuring it belongs to the authenticated user
     updateNote: async (req, res) => {
         const { id } = req.params

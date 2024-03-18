@@ -1,16 +1,16 @@
 # Feature List
 
 ## Authentication
-- Login/Logout
+- Login/Logout [DONE]
 - Forgot password
-- User registration and profile setup
+- User registration and profile setup [50% (User registration implemented)]
 
 ## Gratitude Notes
-- Add, view, edit, and delete gratitude notes
-- Send gratitude notes to other users
+- Add, view, edit, and delete gratitude notes  [50% (Add and view gratitude notes implemented)]
+- Send gratitude notes to other users [DONE]
 
 ## Dashboard
-- Dashboard for viewing personal gratitude notes
+- Dashboard for viewing personal gratitude notes [DONE]
 
 ## Settings
 - Account and notification preferences
