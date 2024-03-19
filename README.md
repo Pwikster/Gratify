@@ -14,7 +14,7 @@
 
 ## Settings
 - Account and notification preferences [DONE]
-- Option to receive gratitude notes via SMS [Twilio is verifying, may not be able to do this feature]
+- Option to receive gratitude notes via SMS [Twilio is verifying, waiting on this for official feature.]
 - Set frequency for sending gratitude notes [DONE]
 - Account deletion option [DONE]
 

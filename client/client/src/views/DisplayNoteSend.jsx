@@ -4,8 +4,11 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthProvider.jsx';
 
 const DisplayNoteSend = () => {
+    // Retrieve authentication token from context
     const { authState: { token } } = useAuth();
     const navigate = useNavigate();
+
+    // State to manage form data and error messages
     const [formData, setFormData] = useState({
         recipient: '',
         note_text: '',
@@ -13,39 +16,43 @@ const DisplayNoteSend = () => {
     });
     const [errorMessage, setErrorMessage] = useState('');
 
+    // Handle form input changes
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
+    // Handle form submission
     const handleSubmit = async (e) => {
         e.preventDefault();
-    
+
         // Recipient validation
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!formData.recipient || (!emailRegex.test(formData.recipient) && formData.recipient.length < 3)) {
             setErrorMessage('Please enter a valid recipient email or username.');
             return;
         }
-    
+
         // Note content validation
         if (!formData.note_text || formData.note_text.length < 20) {
             setErrorMessage('Please write a note with at least 20 characters to express your gratitude meaningfully.');
             return;
         }
-    
-        // Ensure the date is not in the future.
+
+        // Ensure the date is not in the future
         if (formData.customDate && new Date(formData.customDate) > new Date()) {
             setErrorMessage('The date cannot be in the future.');
             return;
         }
-    
+
+        // Check for authentication token
         if (!token) {
             console.error('Authentication token is missing');
             setErrorMessage('Please log in to send a note.');
             return;
         }
-    
+
         try {
+            // Attempt to send the note
             await axios.post('http://localhost:8000/api/notes/send',
                 { ...formData },
                 { headers: { Authorization: `Bearer ${token}` } }
@@ -56,8 +63,8 @@ const DisplayNoteSend = () => {
             setErrorMessage('Failed to send note. Please try again.');
         }
     };
-    
 
+    // Render the component
     return (
         <div className="container mt-5">
             <div className="row justify-content-center">

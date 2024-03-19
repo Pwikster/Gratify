@@ -35,9 +35,12 @@ const fetchRandomNote = async (userId) => {
     }
 };
 
-const smsTask = cron.schedule('* * * * *', async () => {
-    console.log('Running SMS Task');
-    const users = await User.find({ 'notificationSettings.receiveSMS': true });
+const dailySmsTask = cron.schedule('0 8 * * *', async () => {
+    console.log('Running Daily SMS Task');
+    const users = await User.find({ 
+        'notificationSettings.receiveSMS': true,
+        'notificationSettings.smsFrequency': 'daily'
+    });
 
     for (const user of users) {
         const noteText = await fetchRandomNote(user._id);
@@ -49,4 +52,30 @@ const smsTask = cron.schedule('* * * * *', async () => {
     scheduled: false
 });
 
-smsTask.start();
+const weeklySmsTask = cron.schedule('0 8 * * 1', async () => {
+    console.log('Running Weekly SMS Task');
+    const users = await User.find({
+        'notificationSettings.receiveSMS': true,
+        'notificationSettings.smsFrequency': 'weekly'
+    });
+
+    // Similar user iteration and message sending as in the daily task
+}, {
+    scheduled: false
+});
+
+const monthlySmsTask = cron.schedule('0 8 1 * *', async () => {
+    console.log('Running Monthly SMS Task');
+    const users = await User.find({
+        'notificationSettings.receiveSMS': true,
+        'notificationSettings.smsFrequency': 'monthly'
+    });
+
+    // Similar user iteration and message sending as in the daily task
+}, {
+    scheduled: false
+});
+
+dailySmsTask.start();
+weeklySmsTask.start();
+monthlySmsTask.start();

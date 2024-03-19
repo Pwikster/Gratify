@@ -3,7 +3,10 @@ import axios from 'axios';
 import { useAuth } from '../context/AuthProvider.jsx';
 
 const DisplaySettings = () => {
+    // Accessing authentication state from the context
     const { authState } = useAuth();
+    
+    // State variables to manage user settings, loading state, and error state
     const [settings, setSettings] = useState({
         phoneNumber: '',
         receiveSMS: false,
@@ -12,6 +15,7 @@ const DisplaySettings = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
 
+    // Fetching user settings from the backend upon component mount or auth state change
     useEffect(() => {
         const fetchSettings = async () => {
             try {
@@ -27,11 +31,13 @@ const DisplaySettings = () => {
             }
         };
 
+        // Checking if the user is authenticated before fetching settings
         if (authState.userId) {
             fetchSettings();
         }
     }, [authState.userId, authState.token]);
 
+    // Handling user settings update
     const handleUpdateSettings = async (e) => {
         e.preventDefault();
         try {
@@ -47,6 +53,7 @@ const DisplaySettings = () => {
         }
     };
 
+    // Handling changes in form inputs
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
         setSettings(prevSettings => ({
@@ -55,15 +62,20 @@ const DisplaySettings = () => {
         }));
     };
 
+    // Rendering loading state
     if (loading) return <div>Loading...</div>;
+    
+    // Rendering error state
     if (error) return <div>Error: {error}</div>;
 
+    // Rendering the settings form
     return (
         <div className="container mt-5">
             <div className="card shadow">
                 <div className="card-body">
                     <h2 className="card-title text-center text-success mb-4">User Settings</h2>
                     <form onSubmit={handleUpdateSettings}>
+                        {/* Phone number input */}
                         <div className="mb-3">
                             <label className="form-label">Phone Number:</label>
                             <input
@@ -74,6 +86,7 @@ const DisplaySettings = () => {
                                 className="form-control"
                             />
                         </div>
+                        {/* Receive SMS notification checkbox */}
                         <div className="mb-3 form-check">
                             <input
                                 type="checkbox"
@@ -84,6 +97,7 @@ const DisplaySettings = () => {
                             />
                             <label className="form-check-label">Receive SMS Notifications:</label>
                         </div>
+                        {/* SMS frequency dropdown */}
                         <div className="mb-3">
                             <label className="form-label">SMS Frequency:</label>
                             <select
@@ -97,6 +111,7 @@ const DisplaySettings = () => {
                                 <option value="monthly">Monthly</option>
                             </select>
                         </div>
+                        {/* Update button */}
                         <div className="d-grid gap-2">
                             <button type="submit" className="btn btn-success">
                                 Update Settings

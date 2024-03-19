@@ -113,7 +113,7 @@ const UserController = {
 
     // Method to alter user settings while excluding the password from the return
     updateUserSettings: async (req, res) => {
-        const { phoneNumber, smsFrequency } = req.body;
+        const { phoneNumber, smsFrequency, receiveSMS } = req.body;
         const userId = req.params.id;
 
         try {
@@ -121,6 +121,7 @@ const UserController = {
             const updatedUser = await User.findByIdAndUpdate(userId, {
                 phoneNumber,
                 notificationSettings: {
+                    receiveSMS,
                     smsFrequency,
                 },
             }, { new: true }).select('-password');
