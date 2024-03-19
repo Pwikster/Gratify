@@ -24,4 +24,9 @@ userRouter.post('/login', [
     body('email').isEmail().normalizeEmail().withMessage('Valid email is required'),
     body('password').isLength({ min: 8 }).withMessage('Password must be at least 8 characters long')], UserController.login)
 
+userRouter.get('/users/settings/:id', authMiddleware, UserController.getUserSettings);
+
+userRouter.put('/users/settings/:id', authMiddleware, UserController.updateUserSettings);
+
+
 export default userRouter

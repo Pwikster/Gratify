@@ -1,36 +1,65 @@
-// src/App.js
-import React from 'react';
-import './App.css';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { AuthProvider } from './context/AuthProvider';
-import DisplayDashboard from './views/DisplayDashboard';
-import DisplayLogin from './views/DisplayLogin';
-import DisplayNoteEdit from './views/DisplayNoteEdit';
-import DisplayNoteAdd from './views/DisplayNoteAdd';
-import DisplayNoteSend from './views/DisplayNoteSend';
-import DisplayRegister from './views/DisplayRegister';
-import DisplaySettings from './views/DisplaySettings';
-import Layout from './components/Layout';
+// Importing necessary modules and components from React, React Router, and local files.
+import React from 'react'
+import './App.css'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { AuthProvider, useAuth } from './context/AuthProvider'
+import DisplayDashboard from './views/DisplayDashboard'
+import DisplayLogin from './views/DisplayLogin'
+import DisplayNoteEdit from './views/DisplayNoteEdit'
+import DisplayNoteAdd from './views/DisplayNoteAdd'
+import DisplayNoteSend from './views/DisplayNoteSend'
+import DisplayRegister from './views/DisplayRegister'
+import DisplaySettings from './views/DisplaySettings'
+import Layout from './components/Layout'
+import ProtectedRoute from './components/ProtectedRoute'
+// Importing Bootstrap for styling.
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/js/bootstrap.bundle.min.js'
 
+// Defining the main App component.
 function App() {
   return (
+    // AuthProvider wraps the entire application to provide authentication context.
     <AuthProvider>
+      {/* BrowserRouter wraps the Routes to enable SPA routing. */}
       <BrowserRouter>
+        {/* Routes define the application's navigation structure. */}
         <Routes>
           <Route path="/" element={<DisplayLogin />} />
           <Route path="/register" element={<DisplayRegister />} />
-          {/* Apply Layout to these routes */}
-          <Route path="/" element={<Layout />}> 
-            <Route path="/user" element={<DisplayDashboard />} />
-            <Route path="/user/note/edit/:id" element={<DisplayNoteEdit />} />
-            <Route path="/user/add" element={<DisplayNoteAdd />} />
-            <Route path="/user/send" element={<DisplayNoteSend />} />
-            <Route path="/user/settings" element={<DisplaySettings />} />
+          {/* Protected routes within Layout */}
+          <Route element={<Layout />}>
+            <Route path="/user" element={
+              <ProtectedRoute>
+                <DisplayDashboard />
+              </ProtectedRoute>
+            } />
+            <Route path="/user/note/edit/:id" element={
+              <ProtectedRoute>
+                <DisplayNoteEdit />
+              </ProtectedRoute>
+            } />
+            <Route path="/user/add" element={
+              <ProtectedRoute>
+                <DisplayNoteAdd />
+              </ProtectedRoute>
+            } />
+            <Route path="/user/send" element={
+              <ProtectedRoute>
+                <DisplayNoteSend />
+              </ProtectedRoute>
+            } />
+            <Route path="/user/settings" element={
+              <ProtectedRoute>
+                <DisplaySettings />
+              </ProtectedRoute>
+            } />
           </Route>
         </Routes>
       </BrowserRouter>
     </AuthProvider>
-  );
+  )
 }
 
-export default App;
+// Exporting App component for use
+export default App

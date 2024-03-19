@@ -19,14 +19,31 @@ const DisplayNoteAdd = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        // Ensure token is not empty
+    
+        if (!formData.author || formData.author.length < 3) {
+            setErrorMessage('Please provide an author name with at least 3 characters.');
+            return;
+        }
+    
+        // Note content validation
+        if (!formData.note_text || formData.note_text.length < 20) {
+            setErrorMessage('Please write a note with at least 20 characters to express your gratitude meaningfully.');
+            return;
+        }
+    
+        // Custom Date Validation (if applicable)
+        // Ensure the date is not in the future.
+        if (formData.customDate && new Date(formData.customDate) > new Date()) {
+            setErrorMessage('The date cannot be in the future.');
+            return;
+        }
+    
         if (!token) {
             console.error('Authentication token is missing');
             setErrorMessage('Authentication error. Please log in.');
             return;
         }
-
+    
         try {
             await axios.post('http://localhost:8000/api/notes', 
                 { ...formData }, 
@@ -38,40 +55,58 @@ const DisplayNoteAdd = () => {
             setErrorMessage('Failed to add note. Please try again.');
         }
     };
+    
 
     return (
-        <div style={{ maxWidth: '600px', margin: '40px auto', padding: '20px', boxShadow: '0 0 10px rgba(0,0,0,0.1)' }}>
-            <h2 style={{ textAlign: 'center', marginBottom: '20px' }}>Add a Gratitude Note</h2>
-            {errorMessage && <div style={{ color: 'red', textAlign: 'center', marginBottom: '20px' }}>{errorMessage}</div>}
-            <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                <input
-                    type="text"
-                    name="author"
-                    placeholder="Author"
-                    value={formData.author}
-                    onChange={handleChange}
-                    required
-                    style={{ padding: '10px', fontSize: '16px', borderRadius: '5px', border: '1px solid #ccc' }}
-                />
-                <textarea
-                    name="note_text"
-                    placeholder="Write your gratitude note here..."
-                    value={formData.note_text}
-                    onChange={handleChange}
-                    required
-                    style={{ padding: '10px', fontSize: '16px', height: '150px', borderRadius: '5px', border: '1px solid #ccc' }}
-                />
-                <input
-                    type="date"
-                    name="customDate"
-                    value={formData.customDate}
-                    onChange={handleChange}
-                    style={{ padding: '10px', fontSize: '16px', borderRadius: '5px', border: '1px solid #ccc' }}
-                />
-                <button type="submit" style={{ padding: '10px 20px', fontSize: '16px', cursor: 'pointer', backgroundColor: '#007bff', color: 'white', border: 'none', borderRadius: '5px' }}>
-                    Add Note
-                </button>
-            </form>
+        <div className="container mt-5">
+            <div className="row justify-content-center">
+                <div className="col-md-8">
+                    <div className="card shadow">
+                        <div className="card-body">
+                            <h2 className="card-title text-center text-success mb-4">Add a Gratitude Note</h2>
+                            {errorMessage && <div className="alert alert-danger" role="alert">{errorMessage}</div>}
+                            <form onSubmit={handleSubmit}>
+                                <div className="mb-3">
+                                    <input
+                                        type="text"
+                                        name="author"
+                                        placeholder="Author"
+                                        value={formData.author}
+                                        onChange={handleChange}
+                                        required
+                                        className="form-control"
+                                    />
+                                </div>
+                                <div className="mb-3">
+                                    <textarea
+                                        name="note_text"
+                                        placeholder="Write your gratitude note here..."
+                                        value={formData.note_text}
+                                        onChange={handleChange}
+                                        required
+                                        className="form-control"
+                                        rows="3"
+                                    ></textarea>
+                                </div>
+                                <div className="mb-3">
+                                    <input
+                                        type="date"
+                                        name="customDate"
+                                        value={formData.customDate}
+                                        onChange={handleChange}
+                                        className="form-control"
+                                    />
+                                </div>
+                                <div className="d-grid gap-2">
+                                    <button type="submit" className="btn btn-success">
+                                        Add Note
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 };
