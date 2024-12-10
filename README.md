@@ -2,7 +2,7 @@
 
 ## Authentication
 - Login/Logout [DONE]
-- Forgot password
+- Forgot password [NOT IMPLEMENTED]
 - User registration and profile setup [DONE]
 
 ## Gratitude Notes
@@ -14,7 +14,7 @@
 
 ## Settings
 - Account and notification preferences [DONE]
-- Option to receive gratitude notes via SMS [Twilio is verifying, waiting on this for official feature.]
+- Option to receive gratitude notes via SMS [NOT IMPLEMENTED]
 - Set frequency for sending gratitude notes [DONE]
 - Account deletion option [DONE]
 
